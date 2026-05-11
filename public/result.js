@@ -8,13 +8,13 @@ const cueList = [
   "Quietness",
   "Visible belongings",
   "Managed environment",
-  "I was unsure",
   "Other"
 ];
 
 const result = document.querySelector("#result");
 const params = new URLSearchParams(window.location.search);
 const sessionId = params.get("session");
+let activeSession = null;
 
 if (!sessionId) {
   const latestSession = readStoredResult("latest-session-result");
@@ -70,6 +70,7 @@ async function loadSession(id) {
 }
 
 function renderSession(session) {
+  activeSession = session;
   const cueCounts = countCues(session.responses);
   const topCueRows = Object.entries(cueCounts)
     .filter(([, count]) => count > 0)
@@ -128,11 +129,7 @@ function renderSession(session) {
     ${renderStoredFiles(session)}
     <div class="button-row">
       <a class="button" href="/">Restart</a>
-      ${
-        session.savedOnServer === false
-          ? ""
-          : `<a class="button" href="/api/sessions/${encodeURIComponent(session.sessionId)}">View JSON through API</a>`
-      }
+      <button class="button" data-action="download-json">Download JSON</button>
     </div>
   `;
 }
@@ -207,6 +204,28 @@ function readStoredResult(key) {
   } catch {
     return null;
   }
+}
+
+result.addEventListener("click", (event) => {
+  const target = event.target.closest("[data-action]");
+  if (!target) return;
+
+  if (target.dataset.action === "download-json" && activeSession) {
+    downloadJson(activeSession);
+  }
+});
+
+function downloadJson(session) {
+  const json = `${JSON.stringify(session, null, 2)}\n`;
+  const blob = new Blob([json], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `parking_session_${session.sessionId}.json`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 function escapeHtml(value) {
