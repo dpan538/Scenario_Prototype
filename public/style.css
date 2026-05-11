@@ -137,6 +137,8 @@ h3 {
   border-radius: 0;
   text-decoration: none;
   display: inline-block;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .button:hover,
@@ -261,12 +263,60 @@ code {
 }
 
 @media (max-width: 720px) {
+  body {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .sheet {
+    width: min(100%, calc(100vw - 16px));
+    margin: 12px auto;
+  }
+
   .screen {
-    padding: 14px;
+    padding: 12px;
   }
 
   .option-grid,
   .stats-grid {
     grid-template-columns: 1fr;
+  }
+
+  .button,
+  .choice-button,
+  .tag,
+  .number-button,
+  .context-button {
+    min-height: 44px;
+  }
+
+  .number-button {
+    min-width: 44px;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .button:hover,
+  .choice-button:hover,
+  .tag:hover,
+  .number-button:hover,
+  .context-button:hover {
+    background: #fff;
+  }
+
+  .primary:hover,
+  .button.primary:hover {
+    background: #f2f2f2;
+  }
+
+  .option-panel.selected,
+  .choice-button.selected,
+  .tag.selected,
+  .number-button.selected,
+  .context-button.selected,
+  .choice-button.selected:hover,
+  .tag.selected:hover,
+  .number-button.selected:hover,
+  .context-button.selected:hover {
+    background: var(--mark);
   }
 }

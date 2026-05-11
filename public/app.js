@@ -220,6 +220,11 @@ const state = {
   error: ""
 };
 
+const prefersFastTouch =
+  window.matchMedia?.("(hover: none), (pointer: coarse)").matches ?? false;
+let activePointerStart = null;
+let lastPointerActionAt = 0;
+
 renderIntro();
 
 function renderIntro() {
@@ -589,8 +594,52 @@ function getCurrentScenario() {
 }
 
 app.addEventListener("click", (event) => {
+  if (prefersFastTouch && Date.now() - lastPointerActionAt < 500) {
+    return;
+  }
+  handleActionEvent(event);
+});
+
+if (prefersFastTouch && window.PointerEvent) {
+  app.addEventListener("pointerdown", (event) => {
+    const target = event.target.closest("[data-action]");
+    if (!target || target.disabled) {
+      activePointerStart = null;
+      return;
+    }
+
+    activePointerStart = {
+      target,
+      x: event.clientX,
+      y: event.clientY
+    };
+  });
+
+  app.addEventListener("pointerup", (event) => {
+    if (!activePointerStart) return;
+
+    const target = event.target.closest("[data-action]");
+    const moved =
+      Math.abs(event.clientX - activePointerStart.x) > 12 ||
+      Math.abs(event.clientY - activePointerStart.y) > 12;
+
+    if (target === activePointerStart.target && !moved) {
+      event.preventDefault();
+      lastPointerActionAt = Date.now();
+      handleActionEvent(event);
+    }
+
+    activePointerStart = null;
+  });
+
+  app.addEventListener("pointercancel", () => {
+    activePointerStart = null;
+  });
+}
+
+function handleActionEvent(event) {
   const target = event.target.closest("[data-action]");
-  if (!target) return;
+  if (!target || target.disabled) return;
 
   const action = target.dataset.action;
 
@@ -661,7 +710,7 @@ app.addEventListener("click", (event) => {
   if (action === "retry-save") {
     saveSession();
   }
-});
+}
 
 function icon(name, extraClass = "") {
   const cls = extraClass ? `icon ${extraClass}` : "icon";
