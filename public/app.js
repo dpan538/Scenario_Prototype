@@ -317,10 +317,13 @@ function renderReflectionPanel(scenario) {
 
 async function saveSession() {
   state.completedAt = new Date().toISOString();
+  const fallbackSession = createResultSession();
+  storeResultSession(fallbackSession);
+
   app.innerHTML = `
     <h1>Saving session data...</h1>
     <div class="rule"></div>
-    <p>The session object is being sent to the local server.</p>
+    <p>Your result is ready. The app is also trying to save a copy on the server.</p>
   `;
 
   try {
@@ -340,10 +343,14 @@ async function saveSession() {
     }
 
     const saved = await response.json();
+    const resultSession = createResultSession(saved);
+    storeResultSession(resultSession);
+
     app.innerHTML = `
-      <h1>Session saved.</h1>
+      <h1>Result ready.</h1>
       <div class="rule"></div>
       <div class="status-box">
+        <p>The result can be viewed now. A server copy was also saved.</p>
         <p>Generated files:</p>
         <ul class="plain-list">
           <li><code>${escapeHtml(saved.storedFiles.sessionJson)}</code></li>
@@ -355,19 +362,95 @@ async function saveSession() {
         </ul>
       </div>
       <div class="button-row">
-        <a class="button primary" href="/result.html?session=${encodeURIComponent(saved.sessionId)}">View recorded session result</a>
+        <a class="button primary" href="/result.html?session=${encodeURIComponent(resultSession.sessionId)}">View session result</a>
       </div>
     `;
   } catch (error) {
     app.innerHTML = `
-      <h1>Session could not be saved.</h1>
+      <h1>Result ready.</h1>
       <div class="rule"></div>
-      <p>${escapeHtml(error.message)}</p>
+      <p>The server copy could not be saved, but your result is available in this browser.</p>
+      <p class="small muted">${escapeHtml(error.message)}</p>
       <div class="button-row">
+        <a class="button primary" href="/result.html?session=${encodeURIComponent(fallbackSession.sessionId)}">View session result</a>
         <button class="button" data-action="retry-save">Try saving again</button>
       </div>
     `;
   }
+}
+
+function createResultSession(saved = {}) {
+  const sessionId = saved.sessionId || makeClientSessionId();
+  return {
+    sessionId,
+    startedAt: state.startedAt,
+    completedAt: state.completedAt,
+    responses: state.responses,
+    summary: saved.summary || calculateSummary(state.responses),
+    storedFiles: saved.storedFiles || null,
+    savedOnServer: Boolean(saved.sessionId)
+  };
+}
+
+function storeResultSession(session) {
+  const payload = JSON.stringify(session);
+  try {
+    sessionStorage.setItem(`session-result:${session.sessionId}`, payload);
+    sessionStorage.setItem("latest-session-result", payload);
+  } catch {}
+
+  try {
+    localStorage.setItem(`session-result:${session.sessionId}`, payload);
+    localStorage.setItem("latest-session-result", payload);
+  } catch {}
+}
+
+function calculateSummary(responses) {
+  const cueCounts = Object.fromEntries(cueList.map((cue) => [cue, 0]));
+  for (const response of responses) {
+    for (const cue of response.selectedCues) {
+      cueCounts[cue] = (cueCounts[cue] || 0) + 1;
+    }
+  }
+
+  const topCues = Object.entries(cueCounts)
+    .filter(([, count]) => count > 0)
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, 3)
+    .map(([cue]) => cue);
+
+  const selectedCueSet = new Set(topCues);
+  const lowCues = cueList.filter((cue) => !selectedCueSet.has(cue)).slice(0, 3);
+  const confidenceTotal = responses.reduce((total, response) => total + response.confidence, 0);
+  const averageConfidence = responses.length
+    ? Number((confidenceTotal / responses.length).toFixed(2))
+    : 0;
+
+  return {
+    scenarioPath: responses.map((response) => response.scenarioId).join(" > "),
+    scenarioCount: responses.length,
+    topCues,
+    lowCues,
+    reconsiderCount: responses.filter(
+      (response) => response.contextShiftAnswer === "Yes, I might reconsider."
+    ).length,
+    averageConfidence
+  };
+}
+
+function makeClientSessionId() {
+  const now = new Date();
+  const stamp = [
+    now.getFullYear(),
+    String(now.getMonth() + 1).padStart(2, "0"),
+    String(now.getDate()).padStart(2, "0"),
+    "_",
+    String(now.getHours()).padStart(2, "0"),
+    String(now.getMinutes()).padStart(2, "0"),
+    String(now.getSeconds()).padStart(2, "0")
+  ].join("");
+  const suffix = Math.random().toString(36).slice(2, 6);
+  return `session_${stamp}_${suffix}`;
 }
 
 function continueFromContext() {

@@ -17,21 +17,32 @@ const params = new URLSearchParams(window.location.search);
 const sessionId = params.get("session");
 
 if (!sessionId) {
-  result.innerHTML = `
-    <h1>Recorded Session Result</h1>
-    <div class="rule"></div>
-    <p>No session id was provided.</p>
-    <a class="button" href="/">Return to prototype</a>
-  `;
+  const latestSession = readStoredResult("latest-session-result");
+  if (latestSession) {
+    renderSession(latestSession);
+  } else {
+    result.innerHTML = `
+      <h1>Session Result</h1>
+      <div class="rule"></div>
+      <p>No session result was found in this browser.</p>
+      <a class="button" href="/">Return to prototype</a>
+    `;
+  }
 } else {
   loadSession(sessionId);
 }
 
 async function loadSession(id) {
+  const browserSession = readStoredResult(`session-result:${id}`);
+  if (browserSession) {
+    renderSession(browserSession);
+    return;
+  }
+
   result.innerHTML = `
-    <h1>Recorded Session Result</h1>
+    <h1>Session Result</h1>
     <div class="rule"></div>
-    <p>Reading saved session data from the local server...</p>
+    <p>Reading saved session data...</p>
   `;
 
   try {
@@ -42,10 +53,17 @@ async function loadSession(id) {
     const session = await response.json();
     renderSession(session);
   } catch (error) {
+    const latestSession = readStoredResult("latest-session-result");
+    if (latestSession && latestSession.sessionId === id) {
+      renderSession(latestSession);
+      return;
+    }
+
     result.innerHTML = `
-      <h1>Recorded Session Result</h1>
+      <h1>Session Result</h1>
       <div class="rule"></div>
       <p>${escapeHtml(error.message)}</p>
+      <p>No browser copy of this result was found. Please complete the prototype again on this device.</p>
       <a class="button" href="/">Return to prototype</a>
     `;
   }
@@ -60,10 +78,11 @@ function renderSession(session) {
 
   result.innerHTML = `
     <div class="topline">
-      <h1>Recorded Session Path</h1>
+      <h1>Session Result</h1>
       <span>Session ID: ${escapeHtml(session.sessionId)}</span>
     </div>
     <div class="rule"></div>
+    <p><strong>Recording status:</strong> ${session.savedOnServer === false ? "Result shown in browser only" : "Server copy available"}</p>
     <p><strong>Started:</strong> ${escapeHtml(formatDate(session.startedAt))}</p>
     <p><strong>Completed:</strong> ${escapeHtml(formatDate(session.completedAt))}</p>
     <p><strong>Scenario path:</strong> ${escapeHtml(session.summary.scenarioPath)}</p>
@@ -106,6 +125,30 @@ function renderSession(session) {
         </div>
       </div>
     </section>
+    ${renderStoredFiles(session)}
+    <div class="button-row">
+      <a class="button" href="/">Restart</a>
+      ${
+        session.savedOnServer === false
+          ? ""
+          : `<a class="button" href="/api/sessions/${encodeURIComponent(session.sessionId)}">View JSON through API</a>`
+      }
+    </div>
+  `;
+}
+
+function renderStoredFiles(session) {
+  if (!session.storedFiles) {
+    return `
+      <div class="rule"></div>
+      <section class="panel">
+        <h2>Storage</h2>
+        <p>This result is shown from the browser. No server files were recorded for this session.</p>
+      </section>
+    `;
+  }
+
+  return `
     <div class="rule"></div>
     <section class="panel">
       <h2>Stored Files</h2>
@@ -119,10 +162,6 @@ function renderSession(session) {
         <li><code>${escapeHtml(session.storedFiles.masterCsv)}</code></li>
       </ul>
     </section>
-    <div class="button-row">
-      <a class="button" href="/">Restart</a>
-      <a class="button" href="/api/sessions/${encodeURIComponent(session.sessionId)}">View JSON through API</a>
-    </div>
   `;
 }
 
@@ -154,6 +193,19 @@ function formatDate(value) {
     return value;
   }
   return date.toLocaleString();
+}
+
+function readStoredResult(key) {
+  const raw = sessionStorage.getItem(key) || localStorage.getItem(key);
+  if (!raw) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
 }
 
 function escapeHtml(value) {
