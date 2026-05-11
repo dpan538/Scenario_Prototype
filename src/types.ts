@@ -1,4 +1,4 @@
-export type ScenarioOptionKey = "A" | "B";
+export type ScenarioOptionKey = "A" | "B" | "C";
 
 export interface ScenarioOption {
   title: string;
@@ -12,11 +12,13 @@ export interface Scenario {
   options: {
     A: ScenarioOption;
     B: ScenarioOption;
+    C?: ScenarioOption;
   };
   followUpQuestion: string;
   feedback: {
     A: string;
     B: string;
+    C?: string;
   };
 }
 

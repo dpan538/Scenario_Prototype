@@ -3,7 +3,8 @@ import path from "node:path";
 import {
   contextShiftAnswers,
   cueList,
-  legacyContextShiftAnswers
+  legacyContextShiftAnswers,
+  scenarios
 } from "./scenarios.js";
 import {
   createDataPaths,
@@ -12,7 +13,11 @@ import {
   readStoredSession,
   writeStoredSession
 } from "./session-writer.js";
-import type { ParticipantResponse, SessionSubmission } from "./types.js";
+import type {
+  ParticipantResponse,
+  ScenarioOptionKey,
+  SessionSubmission
+} from "./types.js";
 
 const projectRoot = process.cwd();
 const publicDir = path.join(projectRoot, "public");
@@ -89,8 +94,11 @@ function validateSubmission(value: unknown): ValidationResult {
     return { ok: false, error: "Submission timestamps are required." };
   }
 
-  if (!Array.isArray(responses) || responses.length !== 4) {
-    return { ok: false, error: "Exactly four scenario responses are required." };
+  if (!Array.isArray(responses) || responses.length !== scenarios.length) {
+    return {
+      ok: false,
+      error: `Exactly ${scenarios.length} scenario responses are required.`
+    };
   }
 
   const parsedResponses: ParticipantResponse[] = [];
@@ -122,11 +130,12 @@ function validateResponse(value: unknown): ResponseValidationResult {
   }
 
   const selectedCues = value.selectedCues;
+  const selectedOption = value.selectedOption;
   if (
     typeof value.scenarioOrder !== "number" ||
     typeof value.scenarioId !== "string" ||
     typeof value.scenarioTitle !== "string" ||
-    (value.selectedOption !== "A" && value.selectedOption !== "B") ||
+    !isScenarioOptionKey(selectedOption) ||
     !Array.isArray(selectedCues) ||
     selectedCues.length === 0 ||
     typeof value.confidence !== "number" ||
@@ -137,6 +146,11 @@ function validateResponse(value: unknown): ResponseValidationResult {
     typeof value.submittedAt !== "string"
   ) {
     return { ok: false, error: "A response is missing required fields." };
+  }
+
+  const scenario = scenarios.find((item) => item.id === value.scenarioId);
+  if (!scenario || !scenario.options[selectedOption]) {
+    return { ok: false, error: "Selected option is not valid for this scenario." };
   }
 
   if (!selectedCues.every((cue) => typeof cue === "string" && cueList.includes(cue))) {
@@ -157,7 +171,7 @@ function validateResponse(value: unknown): ResponseValidationResult {
       scenarioOrder: value.scenarioOrder,
       scenarioId: value.scenarioId,
       scenarioTitle: value.scenarioTitle,
-      selectedOption: value.selectedOption,
+      selectedOption,
       selectedCues,
       confidence: value.confidence,
       wasUnsure: typeof value.wasUnsure === "boolean" ? value.wasUnsure : false,
@@ -169,4 +183,8 @@ function validateResponse(value: unknown): ResponseValidationResult {
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
+}
+
+function isScenarioOptionKey(value: unknown): value is ScenarioOptionKey {
+  return value === "A" || value === "B" || value === "C";
 }

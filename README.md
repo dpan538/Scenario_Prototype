@@ -11,13 +11,13 @@ The prototype is designed to observe:
 - which parking-related cues participants select;
 - how confident they feel about each choice;
 - whether they reconsider when the context changes;
-- what scenario path they completed.
+- how they respond across a shared six-scenario sequence.
 
 It is a reaction and reflection tool for class-level HCI testing.
 
 ## What This Prototype Does Not Do
 
-This prototype runs locally only. It does not use a database, cloud storage, deployment, maps, or real crime data.
+This prototype does not use a database, maps, or real crime data. On Vercel, completed results are shown from the browser session first because serverless file storage is temporary.
 
 It does not predict crime, rank parking options, identify locations, track personal location, store user accounts, or provide driving instructions.
 
@@ -52,18 +52,17 @@ Port `6000` is intentionally blocked by many browsers because it is a restricted
 ## How It Works
 
 1. The participant starts on `public/index.html`.
-2. Scenario 1 is always shown first.
-3. The path branches after Scenario 1:
-   - `scenario_01:A > scenario_02 > scenario_04 > scenario_05`
-   - `scenario_01:B > scenario_03 > scenario_04 > scenario_05`
+2. The participant sees six scenarios in the same order.
+3. Most scenarios have Option A and Option B. Scenario 3 and Scenario 6 include an Option C to create a middle or third trade-off.
 4. Each scenario requires:
-   - Option A or Option B;
+   - one option selection;
    - at least one cue tag;
    - one confidence value from 1 to 5;
    - one context-shift answer.
-5. The browser submits the completed session to `POST /api/save-session`.
-6. The TypeScript server writes JSON and CSV files.
-7. The result page loads the saved session with `GET /api/sessions/:sessionId`.
+5. The browser stores a result copy locally so the result page can always render after completion.
+6. The browser also submits the completed session to `POST /api/save-session`.
+7. The TypeScript server writes JSON and CSV files when file storage is available.
+8. The result page loads the browser result first, then falls back to `GET /api/sessions/:sessionId` when needed.
 
 ## Where Data Is Saved
 
