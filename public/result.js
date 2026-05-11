@@ -172,6 +172,7 @@ function renderPathNode(response) {
       <p>Selected: Option ${escapeHtml(response.selectedOption)}</p>
       <p>Cues: ${escapeHtml(response.selectedCues.join(", "))}</p>
       <p>Confidence: ${escapeHtml(response.confidence)} / 5</p>
+      <p>Uncertainty noted: ${response.wasUnsure ? "Yes" : "No"}</p>
       <p>Context shift: ${escapeHtml(response.contextShiftAnswer)}</p>
     </article>
   `;

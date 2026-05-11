@@ -27,6 +27,7 @@ export interface ParticipantResponse {
   selectedOption: ScenarioOptionKey;
   selectedCues: string[];
   confidence: number;
+  wasUnsure?: boolean;
   contextShiftAnswer: string;
   submittedAt: string;
 }

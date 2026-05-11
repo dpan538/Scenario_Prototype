@@ -1,6 +1,10 @@
 import express from "express";
 import path from "node:path";
-import { contextShiftAnswers, cueList } from "./scenarios.js";
+import {
+  contextShiftAnswers,
+  cueList,
+  legacyContextShiftAnswers
+} from "./scenarios.js";
 import {
   createDataPaths,
   ensureDataFiles,
@@ -139,7 +143,11 @@ function validateResponse(value: unknown): ResponseValidationResult {
     return { ok: false, error: "Selected cues must use the fixed cue list." };
   }
 
-  if (!contextShiftAnswers.includes(value.contextShiftAnswer)) {
+  if (
+    ![...contextShiftAnswers, ...legacyContextShiftAnswers].includes(
+      value.contextShiftAnswer
+    )
+  ) {
     return { ok: false, error: "Context-shift answer is not recognised." };
   }
 
@@ -152,6 +160,7 @@ function validateResponse(value: unknown): ResponseValidationResult {
       selectedOption: value.selectedOption,
       selectedCues,
       confidence: value.confidence,
+      wasUnsure: typeof value.wasUnsure === "boolean" ? value.wasUnsure : false,
       contextShiftAnswer: value.contextShiftAnswer,
       submittedAt: value.submittedAt
     }

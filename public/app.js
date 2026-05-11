@@ -2,10 +2,14 @@ const scenarios = [
   {
     id: "scenario_01",
     title: "Near Destination vs Managed Parking",
-    context:
-      "You are parking at night for around 40 minutes.\nBoth options include mixed cues.",
+    context: "Parking at night, around 40 minutes.",
     options: {
-      A: ["Closer destination", "More street activity", "Weaker lighting"],
+      A: [
+        "Closer destination",
+        "More street activity",
+        "Weaker lighting",
+        "Street parking"
+      ],
       B: [
         "Brighter car park",
         "CCTV visible",
@@ -16,17 +20,14 @@ const scenarios = [
     followUpQuestion:
       "Would your choice change if you were parking for three hours instead of 40 minutes?",
     feedback: {
-      A:
-        "You selected Option A.\n\nThis may suggest that proximity and street activity felt important in your judgement.\nAnother participant might focus more on lighting or formal surveillance.\n\nThere is no correct answer in this scenario.",
-      B:
-        "You selected Option B.\n\nThis may suggest that lighting, CCTV, and patrol presence felt reassuring.\nAnother participant might focus more on distance or street activity.\n\nThere is no correct answer in this scenario."
+      A: "Proximity and street activity may have shaped your choice.",
+      B: "Lighting, CCTV, and patrol presence may have shaped your choice."
     }
   },
   {
     id: "scenario_02",
     title: "Quiet Availability vs Crowded Visibility",
-    context:
-      "You are parking near a public area for around one to two hours.\nBoth options include mixed cues.",
+    context: "Parking near a public area for one to two hours.",
     options: {
       A: ["More parking spaces", "Quiet corner", "Nearby CCTV", "Less activity"],
       B: [
@@ -39,17 +40,14 @@ const scenarios = [
     followUpQuestion:
       "Would your choice change if the area became much quieter after closing time?",
     feedback: {
-      A:
-        "You selected Option A.\n\nThis may suggest that quietness and available space felt important in your judgement.\nAnother participant might focus more on people, vehicles, or direct visibility.\n\nThere is no correct answer in this scenario.",
-      B:
-        "You selected Option B.\n\nThis may suggest that people, vehicles, and direct CCTV visibility felt important.\nAnother participant might prefer a quieter area with easier parking.\n\nThere is no correct answer in this scenario."
+      A: "Quietness and available space may have shaped your choice.",
+      B: "Nearby people, vehicles, and direct CCTV visibility may have shaped your choice."
     }
   },
   {
     id: "scenario_03",
     title: "Security Symbol vs Actual Visibility",
-    context:
-      "You are parking in a less familiar area.\nBoth options include mixed cues.",
+    context: "Parking in a less familiar area.",
     options: {
       A: [
         "CCTV sign visible",
@@ -67,35 +65,40 @@ const scenarios = [
     followUpQuestion:
       "Would your choice change if the CCTV sign did not show where the camera actually points?",
     feedback: {
-      A:
-        "You selected Option A.\n\nThis may suggest that security signs and patrol claims felt reassuring.\nAnother participant might focus more on actual sightlines and lighting.\n\nThere is no correct answer in this scenario.",
-      B:
-        "You selected Option B.\n\nThis may suggest that open sightlines and lighting felt more important than security signs.\nAnother participant might feel less reassured without visible formal security.\n\nThere is no correct answer in this scenario."
+      A: "Security signs and patrol claims may have shaped your choice.",
+      B: "Open sightlines and lighting may have shaped your choice."
     }
   },
   {
     id: "scenario_04",
-    title: "Visible Belongings vs Low Visibility",
+    title: "Visible Belongings vs Less Noticeable Belongings",
     context:
-      "You need to park for a longer period. A laptop bag and sleeping bag are visible inside the vehicle.\nBoth options include mixed cues.",
+      "Parking for a longer period with a laptop bag and sleeping bag visible inside the vehicle.",
     options: {
-      A: ["Bright lighting", "Clear surroundings", "Visible belongings"],
-      B: ["Dim lighting", "Low visibility", "Quiet area", "Belongings less obvious"]
+      A: [
+        "Bright lighting",
+        "Clear surroundings",
+        "Visible belongings",
+        "Near main walking route"
+      ],
+      B: [
+        "Moderate lighting",
+        "Side row",
+        "Belongings less obvious",
+        "Closer to exit"
+      ]
     },
     followUpQuestion:
       "Would your choice change if you could move the bag and sleeping gear out of sight?",
     feedback: {
-      A:
-        "You selected Option A.\n\nThis may suggest that lighting and clear surroundings felt important.\nAnother participant might focus more on the visibility of belongings inside the vehicle.\n\nThere is no correct answer in this scenario.",
-      B:
-        "You selected Option B.\n\nThis may suggest that reducing the visibility of belongings felt important.\nAnother participant might focus more on lighting and environmental visibility.\n\nThere is no correct answer in this scenario."
+      A: "Lighting and clear surroundings may have shaped your choice.",
+      B: "Making belongings less noticeable may have shaped your choice."
     }
   },
   {
     id: "scenario_05",
     title: "Familiar Residential Area vs Managed Unknown Area",
-    context:
-      "You need to park for an extended period or overnight.\nBoth options include mixed cues.",
+    context: "Parking for an extended period or overnight.",
     options: {
       A: [
         "Familiar residential area",
@@ -113,10 +116,8 @@ const scenarios = [
     followUpQuestion:
       "Would your choice change if you later found out the familiar residential area had very little activity at night?",
     feedback: {
-      A:
-        "You selected Option A.\n\nThis may suggest that familiarity and everyday experience felt reassuring.\nAnother participant might focus more on formal management or patrol presence.\n\nThere is no correct answer in this scenario.",
-      B:
-        "You selected Option B.\n\nThis may suggest that formal management and patrol presence felt reassuring.\nAnother participant might prefer the familiarity of a residential area.\n\nThere is no correct answer in this scenario."
+      A: "Familiarity and everyday experience may have shaped your choice.",
+      B: "Formal management and patrol presence may have shaped your choice."
     }
   }
 ];
@@ -131,15 +132,27 @@ const cueList = [
   "Quietness",
   "Visible belongings",
   "Managed environment",
-  "I was unsure",
   "Other"
 ];
 
 const contextShiftAnswers = [
-  "Yes, I might reconsider.",
-  "No, I would probably stay with my choice.",
-  "I am not sure."
+  "Yes, I would reconsider",
+  "No, I'd keep my choice",
+  "Not sure"
 ];
+
+const cueIcons = {
+  Lighting: "bulb",
+  Visibility: "eye",
+  "Distance / convenience": "pin",
+  "People nearby": "users",
+  "CCTV / patrol": "camera",
+  Familiarity: "home",
+  Quietness: "volume-off",
+  "Visible belongings": "backpack",
+  "Managed environment": "building",
+  Other: "dots"
+};
 
 const app = document.querySelector("#app");
 
@@ -151,6 +164,7 @@ const state = {
   selectedOption: null,
   selectedCues: new Set(),
   confidence: null,
+  wasUnsure: false,
   contextShiftAnswer: null,
   responses: [],
   feedbackVisible: false,
@@ -187,6 +201,7 @@ function resetScenarioState() {
   state.selectedOption = null;
   state.selectedCues = new Set();
   state.confidence = null;
+  state.wasUnsure = false;
   state.contextShiftAnswer = null;
   state.feedbackVisible = false;
   state.error = "";
@@ -200,6 +215,7 @@ function renderScenario() {
       <h1>Parking Scenario Reflection Tool</h1>
       <span>Scenario ${scenarioNumber} / 4</span>
     </div>
+    ${renderStepDots(scenarioNumber, 4)}
     <div class="rule"></div>
     <h2>${escapeHtml(scenario.title)}</h2>
     <p class="preline">${escapeHtml(scenario.context)}</p>
@@ -209,6 +225,23 @@ function renderScenario() {
       ${renderOptionPanel("B", scenario)}
     </div>
     ${renderReflectionPanel(scenario)}
+  `;
+}
+
+function renderStepDots(current, total) {
+  return `
+    <div class="step-indicator" aria-label="Scenario ${current} of ${total}">
+      ${Array.from({ length: total }, (_, index) => {
+        const step = index + 1;
+        const dot =
+          step < current
+            ? `<div class="step-dot done">${icon("check")}</div>`
+            : step === current
+              ? `<div class="step-dot active">${step}</div>`
+              : `<div class="step-dot">${step}</div>`;
+        return index === 0 ? dot : `<div class="step-line"></div>${dot}`;
+      }).join("")}
+    </div>
   `;
 }
 
@@ -232,13 +265,7 @@ function renderReflectionPanel(scenario) {
   if (!state.selectedOption) {
     return `
       <div class="rule"></div>
-      <section class="panel">
-        <p>Select Option A or Option B before entering cue and confidence data.</p>
-        ${state.error ? `<div class="error">${escapeHtml(state.error)}</div>` : ""}
-        <div class="button-row">
-          <button class="button" data-action="need-option">Continue</button>
-        </div>
-      </section>
+      <p class="muted small">Choose an option to continue.</p>
     `;
   }
 
@@ -248,6 +275,7 @@ function renderReflectionPanel(scenario) {
       <section class="panel">
         <h3>Feedback</h3>
         <p class="preline">${escapeHtml(scenario.feedback[state.selectedOption])}</p>
+        <p class="muted small">There is no correct answer - responses vary across individuals.</p>
       </section>
       <div class="rule"></div>
       <section class="panel">
@@ -274,6 +302,15 @@ function renderReflectionPanel(scenario) {
     `;
   }
 
+  const cuesOk = state.selectedCues.size > 0;
+  const confidenceOk = Boolean(state.confidence);
+  const canSubmit = cuesOk && confidenceOk;
+  const hint = !cuesOk
+    ? "Select at least one cue"
+    : !confidenceOk
+      ? "Rate your confidence"
+      : "";
+
   return `
     <div class="rule"></div>
     <section class="panel">
@@ -285,12 +322,19 @@ function renderReflectionPanel(scenario) {
               <button class="tag${state.selectedCues.has(cue) ? " selected" : ""}"
                 data-action="toggle-cue"
                 data-cue="${escapeAttribute(cue)}">
+                ${icon(cueIcons[cue] || "point", "cue-icon")}
                 ${escapeHtml(cue)}
               </button>
             `
           )
           .join("")}
       </div>
+      <div class="rule"></div>
+      <h3>Uncertainty</h3>
+      <button class="tag${state.wasUnsure ? " selected" : ""}" data-action="toggle-unsure">
+        ${icon("help", "cue-icon")}
+        I was unsure
+      </button>
       <div class="rule"></div>
       <h3>How confident are you in this choice?</h3>
       <p class="small muted">1 = Not confident | 5 = Very confident</p>
@@ -309,7 +353,8 @@ function renderReflectionPanel(scenario) {
       </div>
       ${state.error ? `<div class="error">${escapeHtml(state.error)}</div>` : ""}
       <div class="button-row">
-        <button class="button primary" data-action="submit-reflection">Submit reflection</button>
+        ${hint ? `<span class="muted small">${escapeHtml(hint)}</span>` : ""}
+        <button class="button primary" data-action="submit-reflection" ${canSubmit ? "" : "disabled"}>Submit -&gt;</button>
       </div>
     </section>
   `;
@@ -427,12 +472,16 @@ function calculateSummary(responses) {
     : 0;
 
   return {
-    scenarioPath: responses.map((response) => response.scenarioId).join(" > "),
+    scenarioPath: responses
+      .map((response) => `${response.scenarioId}:${response.selectedOption}`)
+      .join(" > "),
     scenarioCount: responses.length,
     topCues,
     lowCues,
     reconsiderCount: responses.filter(
-      (response) => response.contextShiftAnswer === "Yes, I might reconsider."
+      (response) =>
+        response.contextShiftAnswer === "Yes, I would reconsider" ||
+        response.contextShiftAnswer === "Yes, I might reconsider."
     ).length,
     averageConfidence
   };
@@ -468,6 +517,7 @@ function continueFromContext() {
     selectedOption: state.selectedOption,
     selectedCues: [...state.selectedCues],
     confidence: state.confidence,
+    wasUnsure: state.wasUnsure,
     contextShiftAnswer: state.contextShiftAnswer,
     submittedAt: new Date().toISOString()
   });
@@ -526,6 +576,12 @@ app.addEventListener("click", (event) => {
     renderScenario();
   }
 
+  if (action === "toggle-unsure") {
+    state.wasUnsure = !state.wasUnsure;
+    state.error = "";
+    renderScenario();
+  }
+
   if (action === "confidence") {
     state.confidence = Number(target.dataset.confidence);
     state.error = "";
@@ -562,6 +618,37 @@ app.addEventListener("click", (event) => {
     saveSession();
   }
 });
+
+function icon(name, extraClass = "") {
+  const cls = extraClass ? `icon ${extraClass}` : "icon";
+  const shapes = {
+    backpack:
+      '<path d="M7 7h10"/><path d="M8 7v-1a4 4 0 0 1 8 0v1"/><rect x="5" y="7" width="14" height="13" rx="2"/><path d="M8 12h8"/><path d="M8 16h3"/>',
+    building:
+      '<rect x="5" y="4" width="14" height="16" rx="1"/><path d="M9 8h1"/><path d="M14 8h1"/><path d="M9 12h1"/><path d="M14 12h1"/><path d="M9 20v-4h6v4"/>',
+    bulb:
+      '<path d="M9 18h6"/><path d="M10 22h4"/><path d="M8 11a4 4 0 1 1 8 0c0 2-2 3-2 5h-4c0-2-2-3-2-5z"/>',
+    camera:
+      '<rect x="4" y="7" width="16" height="11" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="12.5" r="3"/>',
+    check: '<path d="M5 12l4 4L19 6"/>',
+    dots:
+      '<circle cx="6" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="18" cy="12" r="1"/>',
+    eye:
+      '<path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3"/>',
+    help:
+      '<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 4.7 1.2c0 2-2.2 2.1-2.2 4"/><path d="M12 18h.01"/>',
+    home:
+      '<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',
+    pin:
+      '<path d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11z"/><circle cx="12" cy="10" r="2"/>',
+    point: '<circle cx="12" cy="12" r="2"/>',
+    users:
+      '<circle cx="9" cy="8" r="3"/><path d="M3 20c.5-4 3-6 6-6s5.5 2 6 6"/><path d="M16 11a3 3 0 1 0 0-6"/><path d="M17 14c2.3.5 3.7 2.4 4 6"/>',
+    "volume-off":
+      '<path d="M5 9v6h4l5 4V5L9 9H5z"/><path d="M19 9l-4 4"/><path d="M15 9l4 4"/>'
+  };
+  return `<svg class="${cls}" viewBox="0 0 24 24" aria-hidden="true">${shapes[name] || shapes.point}</svg>`;
+}
 
 function escapeHtml(value) {
   return String(value)

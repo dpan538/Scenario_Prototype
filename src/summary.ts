@@ -28,7 +28,9 @@ export function calculateSummary(responses: ParticipantResponse[]): SessionSumma
       })
       .slice(0, 3),
     reconsiderCount: responses.filter(
-      (response) => response.contextShiftAnswer === "Yes, I might reconsider."
+      (response) =>
+        response.contextShiftAnswer === "Yes, I would reconsider" ||
+        response.contextShiftAnswer === "Yes, I might reconsider."
     ).length,
     averageConfidence:
       responses.length === 0

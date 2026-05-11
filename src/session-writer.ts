@@ -24,6 +24,7 @@ const sessionCsvHeaders = [
   "selected_option",
   "selected_cues",
   "confidence",
+  "was_unsure",
   "context_shift_answer",
   "submitted_at"
 ];
@@ -138,6 +139,7 @@ function buildSessionCsv(session: StoredSession): string {
       response.selectedOption,
       response.selectedCues.join("|"),
       response.confidence,
+      response.wasUnsure ? "yes" : "no",
       response.contextShiftAnswer,
       response.submittedAt
     ]
