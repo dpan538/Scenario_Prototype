@@ -6,16 +6,16 @@ const scenarios = [
       "You are making a short stop at night and expect to be away from your vehicle for around 40 minutes. The destination is still open, but the surrounding streets are not very busy. Both parking options are within walking distance, but they offer different kinds of reassurance.",
     options: {
       A: [
-        "Closer destination (about 2 minutes away)",
-        "More street activity (people occasionally pass by)",
-        "Weaker lighting (streetlights are dim or spaced far apart)",
-        "Street parking (no clear entry control or staff presence)"
+        "Closer destination",
+        "More street activity",
+        "Weaker lighting",
+        "Street parking"
       ],
       B: [
-        "Brighter managed car park (lighting is stronger near the entrance)",
-        "CCTV visible (camera signs are present, but coverage is unclear)",
-        "Patrol presence (a security vehicle sometimes passes through)",
-        "Farther from destination (about 6-8 minutes walking)"
+        "Brighter managed car park",
+        "CCTV visible",
+        "Patrol presence",
+        "Farther from destination"
       ]
     },
     followUpQuestion:
@@ -32,16 +32,16 @@ const scenarios = [
       "You are visiting a public area during the evening and plan to leave your vehicle unattended for one to two hours. The main entrance is busy now, but nearby shops may close before you return. One option is easier and quieter; the other has more people and vehicles around.",
     options: {
       A: [
-        "More parking spaces (you can park without circling)",
-        "Quiet corner (few people or cars nearby)",
-        "Nearby CCTV (camera is mounted nearby, not directly facing the bay)",
-        "Less activity (the area may feel isolated after closing time)"
+        "More parking spaces",
+        "Quiet corner",
+        "Nearby CCTV",
+        "Less activity"
       ],
       B: [
-        "More cars nearby (several vehicles are parked in the same row)",
-        "More people nearby (pedestrians are still moving through the area)",
-        "Facing CCTV (the bay appears closer to a camera's direction)",
-        "Farther from entrance (you would walk a little longer)"
+        "More cars nearby",
+        "More people nearby",
+        "Facing CCTV",
+        "Farther from entrance"
       ]
     },
     followUpQuestion:
@@ -58,22 +58,22 @@ const scenarios = [
       "You need to park in an area you do not regularly visit. It is after dark, and you only have a short moment to assess the space before walking away. Some security cues are visible, but it is not obvious whether they actually cover the parking bay.",
     options: {
       A: [
-        "CCTV sign visible (a sign suggests monitoring is present)",
-        "Patrol claim displayed (poster says security patrols visit)",
-        "Partial obstruction (a tree or column blocks part of the view)",
-        "Unclear sightline (hard to see the bay from the main footpath)"
+        "CCTV sign visible",
+        "Patrol claim displayed",
+        "Partial obstruction",
+        "Unclear sightline"
       ],
       B: [
-        "No visible security sign (no obvious camera or patrol information)",
-        "Open sightline (the vehicle would be visible from several angles)",
-        "Strong lighting (the bay is under bright overhead lights)",
-        "Clear surroundings (few objects block the view)"
+        "No visible security sign",
+        "Open sightline",
+        "Strong lighting",
+        "Clear surroundings"
       ],
       C: [
-        "No strong security symbol (no clear CCTV or patrol message)",
-        "Moderate lighting (not dark, but not brightly lit)",
-        "Some natural visibility (near a walkway people may use)",
-        "Few people nearby (the area is not busy at the moment)"
+        "No strong security symbol",
+        "Moderate lighting",
+        "Some natural visibility",
+        "Few people nearby"
       ]
     },
     followUpQuestion:
@@ -91,16 +91,16 @@ const scenarios = [
       "You need to leave your vehicle parked for several hours. Before stepping away, you notice that a laptop bag and a sleeping bag are clearly visible through the rear window. You cannot remove the items immediately, so the parking position may affect how noticeable they are.",
     options: {
       A: [
-        "Bright lighting (the vehicle would be easy to see)",
-        "Clear surroundings (few hiding spots around the bay)",
-        "Visible belongings (bags can still be seen through the window)",
-        "Near main walking route (people may pass the vehicle more often)"
+        "Bright lighting",
+        "Clear surroundings",
+        "Visible belongings",
+        "Near main walking route"
       ],
       B: [
-        "Moderate lighting (not dark, but less exposed)",
-        "Side row (away from the main walking route)",
-        "Belongings less obvious (window angle makes the bags harder to notice)",
-        "Closer to exit (easier to leave the car park quickly)"
+        "Moderate lighting",
+        "Side row",
+        "Belongings less obvious",
+        "Closer to exit"
       ]
     },
     followUpQuestion:
@@ -117,16 +117,16 @@ const scenarios = [
       "You need to leave your vehicle overnight or for an extended period. One option is in a residential area that feels socially familiar, while the other is a more formal parking area you have not used before. Both involve uncertainty because you will not return for many hours.",
     options: {
       A: [
-        "Familiar residential area (the street feels like a normal everyday place)",
-        "Near apartment building (some residents may overlook the street)",
-        "Everyday setting (nothing looks unusual or highly restricted)",
-        "No clear patrol (no visible staff or security routine)"
+        "Familiar residential area",
+        "Near apartment building",
+        "Everyday setting",
+        "No clear patrol"
       ],
       B: [
-        "Unfamiliar office car park (you have not parked there before)",
-        "Guard patrol (a guard is seen walking through occasionally)",
-        "Managed access (entry and exit appear controlled)",
-        "Less personal familiarity (the area feels less known to you)"
+        "Unfamiliar office car park",
+        "Guard patrol",
+        "Managed access",
+        "Less personal familiarity"
       ]
     },
     followUpQuestion:
@@ -143,22 +143,22 @@ const scenarios = [
       "You are arriving for an evening event and expect to park for two to three hours. Three parking options are available near the venue. Each option offers a different balance of visibility, management, cost, and walking distance.",
     options: {
       A: [
-        "Underground car park (covered and close to the venue)",
-        "Concrete pillars nearby (some parts of the bay are hidden)",
-        "Limited street visibility (people outside cannot easily see the vehicle)",
-        "Shorter walk (about 2 minutes to the venue)"
+        "Underground car park",
+        "Concrete pillars nearby",
+        "Limited street visibility",
+        "Shorter walk"
       ],
       B: [
-        "Open street parking (vehicle is visible from the road)",
-        "Nearby businesses (some windows face the street)",
-        "No formal management (no staff, gate, or patrol is visible)",
-        "Weather exposure (vehicle is fully outside)"
+        "Open street parking",
+        "Nearby businesses",
+        "No formal management",
+        "Weather exposure"
       ],
       C: [
-        "Paid managed lot (entry and exit are controlled)",
-        "Brighter central area (main rows are well lit)",
-        "Farther walk (about 8-10 minutes to the venue)",
-        "Higher cost (parking fee is clearly posted)"
+        "Paid managed lot",
+        "Brighter central area",
+        "Farther walk",
+        "Higher cost"
       ]
     },
     followUpQuestion:

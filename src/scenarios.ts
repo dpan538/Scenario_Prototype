@@ -35,19 +35,19 @@ export const scenarios: Scenario[] = [
       A: {
         title: "Option A",
         cues: [
-          "Closer destination (about 2 minutes away)",
-          "More street activity (people occasionally pass by)",
-          "Weaker lighting (streetlights are dim or spaced far apart)",
-          "Street parking (no clear entry control or staff presence)"
+          "Closer destination",
+          "More street activity",
+          "Weaker lighting",
+          "Street parking"
         ]
       },
       B: {
         title: "Option B",
         cues: [
-          "Brighter managed car park (lighting is stronger near the entrance)",
-          "CCTV visible (camera signs are present, but coverage is unclear)",
-          "Patrol presence (a security vehicle sometimes passes through)",
-          "Farther from destination (about 6-8 minutes walking)"
+          "Brighter managed car park",
+          "CCTV visible",
+          "Patrol presence",
+          "Farther from destination"
         ]
       }
     },
@@ -67,19 +67,19 @@ export const scenarios: Scenario[] = [
       A: {
         title: "Option A",
         cues: [
-          "More parking spaces (you can park without circling)",
-          "Quiet corner (few people or cars nearby)",
-          "Nearby CCTV (camera is mounted nearby, not directly facing the bay)",
-          "Less activity (the area may feel isolated after closing time)"
+          "More parking spaces",
+          "Quiet corner",
+          "Nearby CCTV",
+          "Less activity"
         ]
       },
       B: {
         title: "Option B",
         cues: [
-          "More cars nearby (several vehicles are parked in the same row)",
-          "More people nearby (pedestrians are still moving through the area)",
-          "Facing CCTV (the bay appears closer to a camera's direction)",
-          "Farther from entrance (you would walk a little longer)"
+          "More cars nearby",
+          "More people nearby",
+          "Facing CCTV",
+          "Farther from entrance"
         ]
       }
     },
@@ -99,28 +99,28 @@ export const scenarios: Scenario[] = [
       A: {
         title: "Option A",
         cues: [
-          "CCTV sign visible (a sign suggests monitoring is present)",
-          "Patrol claim displayed (poster says security patrols visit)",
-          "Partial obstruction (a tree or column blocks part of the view)",
-          "Unclear sightline (hard to see the bay from the main footpath)"
+          "CCTV sign visible",
+          "Patrol claim displayed",
+          "Partial obstruction",
+          "Unclear sightline"
         ]
       },
       B: {
         title: "Option B",
         cues: [
-          "No visible security sign (no obvious camera or patrol information)",
-          "Open sightline (the vehicle would be visible from several angles)",
-          "Strong lighting (the bay is under bright overhead lights)",
-          "Clear surroundings (few objects block the view)"
+          "No visible security sign",
+          "Open sightline",
+          "Strong lighting",
+          "Clear surroundings"
         ]
       },
       C: {
         title: "Option C",
         cues: [
-          "No strong security symbol (no clear CCTV or patrol message)",
-          "Moderate lighting (not dark, but not brightly lit)",
-          "Some natural visibility (near a walkway people may use)",
-          "Few people nearby (the area is not busy at the moment)"
+          "No strong security symbol",
+          "Moderate lighting",
+          "Some natural visibility",
+          "Few people nearby"
         ]
       }
     },
@@ -141,19 +141,19 @@ export const scenarios: Scenario[] = [
       A: {
         title: "Option A",
         cues: [
-          "Bright lighting (the vehicle would be easy to see)",
-          "Clear surroundings (few hiding spots around the bay)",
-          "Visible belongings (bags can still be seen through the window)",
-          "Near main walking route (people may pass the vehicle more often)"
+          "Bright lighting",
+          "Clear surroundings",
+          "Visible belongings",
+          "Near main walking route"
         ]
       },
       B: {
         title: "Option B",
         cues: [
-          "Moderate lighting (not dark, but less exposed)",
-          "Side row (away from the main walking route)",
-          "Belongings less obvious (window angle makes the bags harder to notice)",
-          "Closer to exit (easier to leave the car park quickly)"
+          "Moderate lighting",
+          "Side row",
+          "Belongings less obvious",
+          "Closer to exit"
         ]
       }
     },
@@ -173,19 +173,19 @@ export const scenarios: Scenario[] = [
       A: {
         title: "Option A",
         cues: [
-          "Familiar residential area (the street feels like a normal everyday place)",
-          "Near apartment building (some residents may overlook the street)",
-          "Everyday setting (nothing looks unusual or highly restricted)",
-          "No clear patrol (no visible staff or security routine)"
+          "Familiar residential area",
+          "Near apartment building",
+          "Everyday setting",
+          "No clear patrol"
         ]
       },
       B: {
         title: "Option B",
         cues: [
-          "Unfamiliar office car park (you have not parked there before)",
-          "Guard patrol (a guard is seen walking through occasionally)",
-          "Managed access (entry and exit appear controlled)",
-          "Less personal familiarity (the area feels less known to you)"
+          "Unfamiliar office car park",
+          "Guard patrol",
+          "Managed access",
+          "Less personal familiarity"
         ]
       }
     },
@@ -205,28 +205,28 @@ export const scenarios: Scenario[] = [
       A: {
         title: "Option A",
         cues: [
-          "Underground car park (covered and close to the venue)",
-          "Concrete pillars nearby (some parts of the bay are hidden)",
-          "Limited street visibility (people outside cannot easily see the vehicle)",
-          "Shorter walk (about 2 minutes to the venue)"
+          "Underground car park",
+          "Concrete pillars nearby",
+          "Limited street visibility",
+          "Shorter walk"
         ]
       },
       B: {
         title: "Option B",
         cues: [
-          "Open street parking (vehicle is visible from the road)",
-          "Nearby businesses (some windows face the street)",
-          "No formal management (no staff, gate, or patrol is visible)",
-          "Weather exposure (vehicle is fully outside)"
+          "Open street parking",
+          "Nearby businesses",
+          "No formal management",
+          "Weather exposure"
         ]
       },
       C: {
         title: "Option C",
         cues: [
-          "Paid managed lot (entry and exit are controlled)",
-          "Brighter central area (main rows are well lit)",
-          "Farther walk (about 8-10 minutes to the venue)",
-          "Higher cost (parking fee is clearly posted)"
+          "Paid managed lot",
+          "Brighter central area",
+          "Farther walk",
+          "Higher cost"
         ]
       }
     },
