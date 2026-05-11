@@ -1,0 +1,200 @@
+:root {
+  --ink: #181818;
+  --muted: #5f5f5f;
+  --line: #222;
+  --paper: #fbfbf8;
+  --panel: #ffffff;
+  --mark: #efefef;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  line-height: 1.45;
+}
+
+button {
+  font: inherit;
+}
+
+.sheet {
+  width: min(980px, calc(100vw - 24px));
+  margin: 24px auto;
+}
+
+.screen {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  padding: 20px;
+}
+
+.rule {
+  border-top: 1px dashed var(--line);
+  margin: 16px 0;
+}
+
+.topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  font-size: 1.35rem;
+  margin-bottom: 8px;
+}
+
+h2 {
+  font-size: 1.08rem;
+  margin-bottom: 8px;
+}
+
+h3 {
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: 0.9rem;
+}
+
+.preline {
+  white-space: pre-line;
+}
+
+.option-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.option-panel,
+.panel,
+.result-node {
+  border: 1px solid var(--line);
+  padding: 14px;
+  background: #fff;
+}
+
+.option-panel.selected,
+.choice-button.selected,
+.tag.selected,
+.number-button.selected,
+.context-button.selected {
+  outline: 2px solid var(--ink);
+  background: var(--mark);
+}
+
+.option-panel ul,
+.plain-list {
+  padding-left: 20px;
+  margin: 8px 0 12px;
+}
+
+.button-row,
+.tag-row,
+.number-row,
+.context-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.button-row {
+  margin-top: 16px;
+}
+
+.button,
+.choice-button,
+.tag,
+.number-button,
+.context-button {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  padding: 8px 10px;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.button:hover,
+.choice-button:hover,
+.tag:hover,
+.number-button:hover,
+.context-button:hover {
+  background: var(--mark);
+}
+
+.primary {
+  background: #f2f2f2;
+}
+
+.error {
+  border: 1px solid var(--line);
+  background: #f6f6f6;
+  padding: 8px 10px;
+  margin: 12px 0 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.status-box {
+  border: 1px dashed var(--line);
+  padding: 12px;
+  margin-top: 14px;
+  background: #fff;
+}
+
+.path-tree {
+  display: grid;
+  gap: 10px;
+}
+
+.down {
+  text-align: center;
+  color: var(--muted);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+code {
+  background: #f4f4f4;
+  padding: 1px 3px;
+}
+
+@media (max-width: 720px) {
+  .screen {
+    padding: 14px;
+  }
+
+  .option-grid,
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
